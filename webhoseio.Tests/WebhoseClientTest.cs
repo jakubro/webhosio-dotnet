@@ -15,7 +15,7 @@
         public WebhoseClientTest(ITestOutputHelper console)
         {
             this.console = console;
-            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12; // todo: is this poodle-related issue in xunit runner?
         }
 
         [Fact]
