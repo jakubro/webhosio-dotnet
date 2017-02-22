@@ -3,8 +3,11 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+
+#if !NET35 && !NET40
     using System.Threading;
     using System.Threading.Tasks;
+#endif
 
     public class WebhoseClient
     {
@@ -28,7 +31,7 @@
             return new WebhoseJsonResponseMessage(response);
         }
 
-#if !NET35
+#if !NET35 && !NET40
         public async Task<WebhoseJsonResponseMessage> QueryAsync(
             string endpoint, 
             IDictionary<string, string> parameters)
@@ -56,7 +59,7 @@
                 parameters.Add("format", options.Format);
             }
 
-            var query = string.Join("&", parameters.Select(kv => $"{kv.Key}={Uri.EscapeDataString(kv.Value)}"));
+            var query = string.Join("&", parameters.Select(kv => $"{kv.Key}={Uri.EscapeDataString(kv.Value)}").ToArray());
             query = string.IsNullOrEmpty(query) ? query : "?" + query;
 
             return new Uri(Constants.BaseUri + endpoint + query);

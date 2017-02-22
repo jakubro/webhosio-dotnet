@@ -1,6 +1,8 @@
 webhose.io client for .NET
 ============================
-A simple way to access the [Webhose.io](https://webhose.io) API from your .NET code
+A simple way to access the [Webhose.io](https://webhose.io) API from your .NET code.
+Supported .NET frameworks are .NET 3.5 and higher.
+
 
 ```csharp
 using webhoseio;

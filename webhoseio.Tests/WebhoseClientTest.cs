@@ -1,13 +1,16 @@
 ﻿namespace webhoseio.Tests
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Net;
-    using System.Threading.Tasks;
     using webhoseio;
     using Xunit;
     using Xunit.Abstractions;
+
+#if !NET35 && !NET40
+    using System.Threading;
+    using System.Threading.Tasks;
+#endif
 
     public class WebhoseClientTest
     {
@@ -16,9 +19,12 @@
         public WebhoseClientTest(ITestOutputHelper console)
         {
             this.console = console;
+#if !NET35 && !NET40
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+#endif
         }
 
+#if !NET35 && !NET40
         [Fact]
         public async Task SimpleTest()
         {
@@ -34,5 +40,6 @@
             output = await output.GetNextAsync();
             console.WriteLine(output["posts"][0]["thread"]["site"].ToString());
         }
+#endif
     }
 }

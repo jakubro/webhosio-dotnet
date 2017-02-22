@@ -3,10 +3,10 @@
     using System;
     using System.IO;
     using System.Net;
-    using System.Net.Http;
-    using System.Net.Http.Headers;
-    using System.Threading;
+
+#if !NET35
     using System.Threading.Tasks;
+#endif
 
     static class Helpers
     {
@@ -29,7 +29,7 @@
             }
         }
 
-#if !NET35
+#if !NET35 && !NET40
         public static async Task<string> GetResponseStringAsync(Uri requestUri)
         {
             var request = (HttpWebRequest) WebRequest.Create(requestUri);
@@ -40,6 +40,6 @@
                 return await sr.ReadToEndAsync();
             }
         }
-    }
 #endif
+    }
 }

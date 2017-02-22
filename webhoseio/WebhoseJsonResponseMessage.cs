@@ -1,9 +1,12 @@
 namespace webhoseio
 {
     using System;
+    using Newtonsoft.Json.Linq;
+
+#if !NET35 && !NET40
     using System.Threading;
     using System.Threading.Tasks;
-    using Newtonsoft.Json.Linq;
+#endif
 
     public class WebhoseJsonResponseMessage
     {
@@ -22,7 +25,7 @@ namespace webhoseio
             return new WebhoseJsonResponseMessage(response);
         }
 
-#if !NET35
+#if !NET35 && !NET40
         public async Task<WebhoseJsonResponseMessage> GetNextAsync()
         {
             var response = await Helpers.GetResponseStringAsync(GetNextUri(Json));
