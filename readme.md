@@ -130,7 +130,7 @@ Arguments:
 
 ```csharp
 WebhoseClient client = new WebhoseClient();
-WebhoseJsonResponseMessage response = await client.QueryAsync("search", new Dictionary<string, string> { { "q", "github" } }))
+WebhoseJsonResponseMessage response = await client.QueryAsync("search", new Dictionary<string, string> { { "q", "github" } }));
 ```
 
 #### `Query(endpoint, parameters)`
@@ -143,7 +143,7 @@ Signature: `WebhoseJsonResponseMessage WebhoseClient.Query(string endpoint, IDic
 
 ```csharp
 WebhoseClient client = new WebhoseClient();
-WebhoseJsonResponseMessage response = client.Query("search", new Dictionary<string, string> { { "q", "github" } }))
+WebhoseJsonResponseMessage response = client.Query("search", new Dictionary<string, string> { { "q", "github" } }));
 ```
 
 ### Response
@@ -160,8 +160,20 @@ Fetch the next page of results.
 
 Signature: `Task<WebhoseJsonResponseMessage> WebhoseJsonResponseMessage.GetNextAsync()`
 
+##### Example
+
+```csharp
+output = await response.GetNextAsync();
+```
+
 ##### `GetNext()`
 
 Synchronous variant of `GetNextAsync()`.
 
 Signature: `WebhoseJsonResponseMessage WebhoseJsonResponseMessage.GetNext()`
+
+##### Example
+
+```csharp
+WebhoseJsonResponseMessage output = response.GetNext();
+```
