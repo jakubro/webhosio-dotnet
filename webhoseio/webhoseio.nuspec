@@ -16,9 +16,9 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="bin\ReleaseNET35\**\*.*" target="lib\net35\" />
-    <file src="bin\ReleaseNET40\**\*.*" target="lib\net40\" />
-    <file src="bin\ReleaseNET45\**\*.*" target="lib\net45\" />
-    <file src="bin\ReleaseNET461\**\*.*" target="lib\net461\" />
+    <file src="bin\ReleaseNET35\$id$.dll" target="lib\net35\" />
+    <file src="bin\ReleaseNET40\$id$.dll" target="lib\net40\" />
+    <file src="bin\ReleaseNET45\$id$.dll" target="lib\net45\" />
+    <file src="bin\ReleaseNET461\$id$.dll" target="lib\net461\" />
   </files>
 </package>
