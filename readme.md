@@ -163,7 +163,7 @@ Signature: `Task<WebhoseJsonResponseMessage> WebhoseJsonResponseMessage.GetNextA
 ##### Example
 
 ```csharp
-output = await response.GetNextAsync();
+WebhoseJsonResponseMessage output = await response.GetNextAsync();
 ```
 
 ##### `GetNext()`
