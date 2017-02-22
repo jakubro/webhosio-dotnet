@@ -21,13 +21,17 @@
   </Target>
 
   <Target Name="Build" DependsOnTargets="RestorePackages">
-    <MSBuild Targets="Build"
-             Projects="@(Solution)" />
+    <MSBuild Targets="Build" Projects="@(Solution)" Properties="Configuration=ReleaseNET35" />
+    <MSBuild Targets="Build" Projects="@(Solution)" Properties="Configuration=ReleaseNET40" />
+    <MSBuild Targets="Build" Projects="@(Solution)" Properties="Configuration=ReleaseNET45" />
+    <MSBuild Targets="Build" Projects="@(Solution)" Properties="Configuration=ReleaseNET461" />
   </Target>
 
   <Target Name="Rebuild" DependsOnTargets="RestorePackages">
-    <MSBuild Targets="Rebuild"
-             Projects="@(Solution)" />
+    <MSBuild Targets="Rebuild" Projects="@(Solution)" Properties="Configuration=ReleaseNET35" />
+    <MSBuild Targets="Rebuild" Projects="@(Solution)" Properties="Configuration=ReleaseNET40" />
+    <MSBuild Targets="Rebuild" Projects="@(Solution)" Properties="Configuration=ReleaseNET45" />
+    <MSBuild Targets="Rebuild" Projects="@(Solution)" Properties="Configuration=ReleaseNET461" />
   </Target>
 
 </Project>
