@@ -1,7 +1,7 @@
 webhose.io client for .NET
 ============================
 
-[![jakubro MyGet Build Status](https://www.myget.org/BuildSource/Badge/jakubro?identifier=4c974acd-33ef-4d2b-95b9-9575765af57a)](https://www.myget.org/)
+[![jakubro MyGet Build Status](https://www.myget.org/BuildSource/Badge/jakubro?identifier=4c974acd-33ef-4d2b-95b9-9575765af57a)](https://www.myget.org/feed/jakubro/package/nuget/webhoseio)
 
 A simple way to access the [Webhose.io](https://webhose.io) API from your .NET code.
 Supported .NET frameworks are .NET 3.5 and higher.
