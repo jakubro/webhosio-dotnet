@@ -85,9 +85,9 @@ Console.WriteLine(totalWords);
 Full documentation
 ------------------
 
-## Configuration
+### Configuration
 
-### `new WebhoseClient(string token)`
+#### `new WebhoseClient(string token)`
 
 Creates new client with the provided API key.
 
@@ -95,7 +95,7 @@ Arguments:
 
   * `token` - your API key
 
-### `new WebhoseClient()`
+#### `new WebhoseClient()`
 
 Creates new client with the API key read from `appSettings` with key `webhoseio:token`.
 
@@ -110,7 +110,7 @@ Example `App.config` or `Web.config`:
 </configuration>
 ```
 
-## Query
+### Query
 
 #### `QueryAsync(endpoint, parameters)`
 
@@ -126,7 +126,7 @@ Arguments:
     * `darkWebAPI` - access to the dark web (coming soon)
   * `parameters`: A key value dictionary. The most common key is the "q" parameter that hold the filters Boolean query. [Read about the available filters](https://webhose.io/documentation).
 
-#### Example
+##### Example
 
 ```csharp
 WebhoseClient client = new WebhoseClient();
@@ -139,28 +139,28 @@ Synchronous variant of `Json(endpoint, parameters)`.
 
 Signature: `WebhoseJsonResponseMessage WebhoseClient.Query(string endpoint, IDictionary<string, string> parameters)`
 
-#### Example
+##### Example
 
 ```csharp
 WebhoseClient client = new WebhoseClient();
 WebhoseJsonResponseMessage response = client.Query("search", new Dictionary<string, string> { { "q", "github" } }))
 ```
 
-## Response
+### Response
 
-#### `Json`
+##### `Json`
 
 Response object as [`Newtonsoft.Json`](https://github.com/JamesNK/Newtonsoft.Json) object.
 
 Signature: `JObject Json { get; }`
 
-#### `GetNextAsync()`
+##### `GetNextAsync()`
 
 Fetch the next page of results.
 
 Signature: `Task<WebhoseJsonResponseMessage> WebhoseJsonResponseMessage.GetNextAsync()`
 
-#### `GetNext()`
+##### `GetNext()`
 
 Synchronous variant of `GetNextAsync()`.
 
