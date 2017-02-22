@@ -15,6 +15,11 @@
     <Exec Command="&quot;$(NuGetPath)&quot; restore &quot;%(Solution.Identity)&quot;" />
   </Target>
 
+  <Target Name="CreateNuGetPackage">
+    <Message Importance="High" Text="Creating nuget packages..." />
+    <Exec Command="&quot;$(NuGetPath)&quot; pack -IncludeReferencedProjects -Symbols &quot;webhoseio\webhoseio.csproj&quot;" />
+  </Target>
+
   <Target Name="Clean">
     <MSBuild Targets="Clean"
              Projects="@(Solution)" />
@@ -25,6 +30,7 @@
     <MSBuild Targets="Build" Projects="@(Solution)" Properties="Configuration=ReleaseNET40" />
     <MSBuild Targets="Build" Projects="@(Solution)" Properties="Configuration=ReleaseNET45" />
     <MSBuild Targets="Build" Projects="@(Solution)" Properties="Configuration=ReleaseNET461" />
+    <CallTarget Targets="CreateNuGetPackage" />
   </Target>
 
   <Target Name="Rebuild" DependsOnTargets="RestorePackages">
