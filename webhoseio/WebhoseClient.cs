@@ -10,33 +10,38 @@
     {
         private readonly WebhoseOptions options;
 
+        public WebhoseClient(string token)
+        {
+            this.options = new WebhoseOptions {Token = token};
+        }
+
         public WebhoseClient(WebhoseOptions options = null)
         {
             this.options = options ?? new WebhoseOptions();
         }
 
         public WebhoseJsonResponseMessage Query(
+            string endpoint,
+            IDictionary<string, string> parameters)
+        {
+            var response = Helpers.GetResponseString(GetQueryUri(options, endpoint, parameters));
+            return new WebhoseJsonResponseMessage(response);
+        }
+
+#if !NET35
+        public async Task<WebhoseJsonResponseMessage> QueryAsync(
             string endpoint, 
             IDictionary<string, string> parameters)
         {
-            return QueryAsync(endpoint, parameters).Result;
+            var response = await Helpers.GetResponseStringAsync(GetQueryUri(options, endpoint, parameters));
+            return new WebhoseJsonResponseMessage(response);
         }
+#endif
 
-        public async Task<WebhoseJsonResponseMessage> QueryAsync(
-            string endpoint, 
-            IDictionary<string, string> parameters, 
-            CancellationToken cancellationToken = default(CancellationToken))
-        {
-            var uri = new Uri(Constants.BaseUri + endpoint + ToQueryString(WithMandatoryParameters(parameters)));
-            using (var client = Helpers.GetHttpClient())
-            {
-                var response = await client.GetAsync(uri, cancellationToken);
-                response.EnsureSuccessStatusCode();
-                return new WebhoseJsonResponseMessage(await response.Content.ReadAsStringAsync());
-            }
-        }
-
-        private IDictionary<string, string> WithMandatoryParameters(IDictionary<string, string> parameters)
+        protected static Uri GetQueryUri(
+            WebhoseOptions options,
+            string endpoint,
+            IDictionary<string, string> parameters)
         {
             if (parameters == null)
             {
@@ -50,13 +55,11 @@
             {
                 parameters.Add("format", options.Format);
             }
-            return parameters;
-        }
 
-        private static string ToQueryString(IDictionary<string, string> parameters)
-        {
-            var query = string.Join("&", parameters.Select(kv => $"{kv.Key}={Uri.EscapeDataString(kv.Value)}")); // todo: should the key be escaped too?
-            return string.IsNullOrEmpty(query) ? query : "?" + query;
+            var query = string.Join("&", parameters.Select(kv => $"{kv.Key}={Uri.EscapeDataString(kv.Value)}"));
+            query = string.IsNullOrEmpty(query) ? query : "?" + query;
+
+            return new Uri(Constants.BaseUri + endpoint + query);
         }
     }
 }

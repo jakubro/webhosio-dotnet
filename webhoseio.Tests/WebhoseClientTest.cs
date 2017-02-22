@@ -1,9 +1,10 @@
 ﻿namespace webhoseio.Tests
 {
+    using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Net;
     using System.Threading.Tasks;
-    using Newtonsoft.Json.Linq;
     using webhoseio;
     using Xunit;
     using Xunit.Abstractions;
@@ -15,7 +16,7 @@
         public WebhoseClientTest(ITestOutputHelper console)
         {
             this.console = console;
-            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12; // todo: is this poodle-related issue in xunit runner?
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
         }
 
         [Fact]
@@ -26,6 +27,9 @@
 
             console.WriteLine(output["posts"][0]["text"].ToString());
             console.WriteLine(output["posts"][0]["published"].ToString());
+
+            console.WriteLine(output["posts"].Count().ToString());
+            console.WriteLine(output["posts"][0]["language"].Count().ToString());
 
             output = await output.GetNextAsync();
             console.WriteLine(output["posts"][0]["thread"]["site"].ToString());

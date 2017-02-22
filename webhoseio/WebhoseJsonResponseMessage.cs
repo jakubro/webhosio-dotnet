@@ -9,6 +9,8 @@ namespace webhoseio
     {
         public JObject Json { get; }
 
+        public JToken this[string key] => Json[key];
+
         internal WebhoseJsonResponseMessage(string content)
         {
             Json = JObject.Parse(content);
@@ -16,21 +18,21 @@ namespace webhoseio
 
         public WebhoseJsonResponseMessage GetNext()
         {
-            return GetNextAsync().Result;
+            var response = Helpers.GetResponseString(GetNextUri(Json));
+            return new WebhoseJsonResponseMessage(response);
         }
 
-        public async Task<WebhoseJsonResponseMessage> GetNextAsync(
-            CancellationToken cancellationToken = default(CancellationToken))
+#if !NET35
+        public async Task<WebhoseJsonResponseMessage> GetNextAsync()
         {
-            var uri = Json["next"].Value<string>();
-            using (var client = Helpers.GetHttpClient())
-            {
-                var response = await client.GetAsync(uri, cancellationToken);
-                response.EnsureSuccessStatusCode();
-                return new WebhoseJsonResponseMessage(await response.Content.ReadAsStringAsync());
-            }
+            var response = await Helpers.GetResponseStringAsync(GetNextUri(Json));
+            return new WebhoseJsonResponseMessage(response);
         }
+#endif
 
-        public JToken this[string key] => Json[key];
+        protected static Uri GetNextUri(JObject json)
+        {
+            return new Uri(Constants.BaseUri + json["next"].Value<string>());
+        }
     }
 }
